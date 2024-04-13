@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPRARL</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/user-style.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-design">
+                        <h1>Vehicle Number Plate Recognition & Reverse Lookup</h1>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="search-box">
+            <h2>Search for Number plate</h2>
+            <input type="text" id="search-input" placeholder="Enter plate number">
+            <button id="search-button"><i class="fa fa-search">Search</i></button>
+        </div>
+
+        <div class="search-result-section">
+            <div id="plate-not-found">
+                <h1>The Plate is not Found</h1>
+            </div>
+            <div id="plate-found">
+                <div class="hsrp-result">
+                    <h2>This Number Plate is <span id="hsrp-no-not">NOT</span> HSRP approved</h2>
+                </div>
+                <div class="video-result">
+                    set of videos
+                    <!-- <video width="390" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
+                    <!-- <video width="390" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
+                    <!-- <video width="390" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
+                    <!-- <video width="390" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
+                    <!-- <video width="320" height="240" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
+                    <!-- <video width="320" height="240" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
+                    <!-- <video width="320" height="240" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
+                    <!-- <video width="320" height="240" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+<!--<footer>
+
+    </footer> -->
+</body>
+<script src="js/user-script.js"></script>
+</html>

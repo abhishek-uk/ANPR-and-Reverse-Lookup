@@ -1,0 +1,69 @@
+
+body{
+    height: 100%;
+    background-color: #f0f0f0;
+}
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+
+.login-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+.login-box h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.login-box label {
+    display: block;
+    margin-bottom: 5px;
+}
+.login-box input[type="text"],
+.login-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.login-box input[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.login-box input[type="submit"]:hover {
+    background-color: #45a049;
+}
+.switch {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.switch label {
+    display: inline-block;
+    padding: 5px 20px;
+    background-color: #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.switch input[type="radio"] {
+    display: none;
+}
+.switch input[type="radio"]:checked + label {
+    background-color: #4CAF50;
+    color: #fff;
+}
