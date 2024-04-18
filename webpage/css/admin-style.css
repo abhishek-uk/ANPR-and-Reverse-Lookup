@@ -1,0 +1,152 @@
+body{
+    min-height: 100vh;
+    height: 100vh;
+}
+
+.navbar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar .logout-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    height: calc(95% - 100px);
+}
+
+.side-bar{
+    /* background-color: red; */
+    width: 15%;
+    height: 99%;
+    border-right: 5px solid rgb(0, 195, 255); ;
+    padding: 20px;
+}
+
+.admin-main{
+    /* background-color: green; */
+    /* margin: 20px; */
+    padding: 20px;
+    width: 85%;
+    height: 99%;
+}
+
+.side-bar div{
+    margin: 20px 0;
+    width: 100%;
+    height: 50px;
+    border: 2px solid blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
+    font-weight: bold;
+}
+.side-bar div:hover{
+    background-color: rgb(23, 210, 235);
+}
+.side-bar .active{
+    background-color: rgb(23, 210, 235); 
+}
+
+
+
+.admin-main .admin-sections{
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+.admin-main .active{
+    display: block;
+}
+
+/* #admin-sec-1{background-color: yellow;}
+#admin-sec-2{background-color: pink;}
+#admin-sec-3{background-color: blueviolet;}
+#admin-sec-4{background-color: brown;} */
+
+.admin-main #admin-sec-2 .upload-section{
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-main #admin-sec-2 .upload-section h2{
+    margin: 20px;
+/* background-color: rebeccapurple; */
+}
+
+.admin-main #admin-sec-2 .upload-section input[type=file]{
+    padding: 20px;
+    border: 1px solid rgb(23, 210, 235); 
+    border-radius: 10px;
+}
+
+
+.admin-main #admin-sec-2 .upload-section input[type="submit"] {
+    background-color: rgb(23, 210, 235); ;
+    color: #000000;
+    margin: 20px 35%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.admin-main #admin-sec-2 .result{
+    margin: 30px 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-main #admin-sec-2 .result span{
+    display: none;
+}
+
+
+.admin-main #admin-sec-3 div{
+    width: 100%;
+    height: 100px;
+    /* background-color: orange; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-main #admin-sec-3 .add-new-user{
+    width: 25%;
+    /* background-color: #fff;  */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-weight: bold;
+}
+
+.admin-main #admin-sec-3 .add-new-user button{
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.admin-main #admin-sec-3 .show-users{
+    width: 100%;
+    min-height: 70%;
+    margin-top: 50px;
+    /* background-color: orange; */
+    align-items: start;
+
+}

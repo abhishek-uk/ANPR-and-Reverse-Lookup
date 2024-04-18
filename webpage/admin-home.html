@@ -17,15 +17,59 @@
                     </span>
                 </a>
             </div>
+            <div class="logout-section">
+                <button onclick="console.log('logout button clicked')">Logout</button>
+            </div>
         </div>
     </header>
 
     <main>
-        <h1>This is admin page</h1>
+        <div class="side-bar">
+            <div id="admin-button-1" class="active" onclick="ChangeWorkSection(1)">Home</div>
+            <div id="admin-button-2" onclick="ChangeWorkSection(2)">Upload Videos</div>
+            <div id="admin-button-3" onclick="ChangeWorkSection(3)">Registered Users</div>
+            <div id="admin-button-4" onclick="ChangeWorkSection(4)">Check Database</div>
+        </div>
+        <div class="admin-main">
+            <div id="admin-sec-1" class="admin-sections admin-home active">
+                <div class="admin-greeating">
+                    Hello Admin <br>
+                    // blah blah blah <br> <br> <br>                    
+                    // Admin home
+                </div>
+            </div>
+            <div id="admin-sec-2" class="admin-sections video-upload">
+                <div class="upload-section">
+                    <div>
+                        <h2>Upload a video to system </h2><br>
+                        <input type="file" name="file-input" id=""><br>
+                        <input type="submit" value="Upload">
+                    </div>
+                </div>
+                <div class="result">
+                    <h2><span>Upload complete</span></h2>
+                </div>
+            </div>
+            <div id="admin-sec-3" class="admin-sections users">
+                <!-- // Registered Users -->
+                <div>
+                    <div class="add-new-user">
+                        Add New User ? 
+                        <button>New</button>
+                    </div>
+                </div>
+                <div class="show-users">dfdfd</div>
+            </div>
+            <div id="admin-sec-4" class="admin-sections database-check">
+                // Databases
+            </div>
+        </div>
     </main>
-    <footer>
+    <!-- <footer>
 
-    </footer>
+    </footer> -->
 </body>
 <script src="js/admin.js"></script>
 </html>
+
+
