@@ -88,8 +88,8 @@ def detect_plate(img, detection_threshold=0.5, img_from_path=False):
     height = img_np.shape[0]
     width = img_np.shape[1]
     plates = []
-
-    for idx, box in enumerate(boxes):
+    
+    for box in boxes:
         roi = box * [height, width, height, width]
         region =  img_np[int(roi[0]) : int(roi[2]), int(roi[1]) : int(roi[3])]    
         plates.append(region)
@@ -108,33 +108,35 @@ def save_results_as_csv(plate, text):
 
 
 
-reader = easyocr.Reader(['en'], gpu=False)
 # Plate Recognition Function
-def rec_text(plates):
-    texts = []
-    for plate in plates:
-        ocr_result = reader.readtext(plate)
-        text = ''
-        for part in ocr_result:
-            text += part[1]     # 0.localization 1.text 2.accuracy
-        # print(text)
-        # save_results_as_csv(plate, text)
-        texts.append(text)
-    return texts
-
-
-
-
-
+reader = easyocr.Reader(['en'], gpu=False)
+def rec_text(plate):
+    text = ''
+    ocr_result = reader.readtext(plate)
+    for part in ocr_result:
+        text += part[1]
+    return text
 
 
 
 print('started ')
 
-# img_with_plate, plate = detect_plate('Tensorflow/workspace/images/test/video2_610.jpg', 0.5)
-# text , region = ocr_it(img_with_plate, plate, detection_threshold=0.3, region_threshold=0.2)
-# print(text)
-# save_results(text, region, 'detection_results.csv', 'Detection_Images')
+
+def save_plates_from_video(vid_path):
+    cap = cv2.VideoCapture(vid_path)
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if ret:
+            plates = detect_plate(frame)  
+            for plate in plates:
+                plate_number = rec_text(plate)
+                #  code to store data in to database 
+                if not os.path.exists(f'Temp/{plate_number}.png'):
+                    cv2.imwrite(f'Temp/{plate_number}.png', plate)
+        else:
+            break
+    cap.release()
+
 
 
 print('done')

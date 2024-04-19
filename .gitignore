@@ -6,7 +6,7 @@ Tensorflow/models/*
 Tensorflow/
 detection_results.csv
 
-webpage/TEST.mp4
+templates/TEST.mp4
 
 RnD.py
 
@@ -22,3 +22,7 @@ codes.md
 video_smaple_1.mp4
 
 Test_datas/
+
+__pycache__/
+
+TEST.mp4
