@@ -91,7 +91,6 @@ main{
     border-radius: 10px;
 }
 
-
 .admin-main #admin-sec-2 .upload-section input[type="submit"] {
     background-color: rgb(23, 210, 235); ;
     color: #000000;
@@ -107,12 +106,9 @@ main{
     margin: 30px 10px;
     display: flex;
     justify-content: center;
-}
-
-.admin-main #admin-sec-2 .result span{
+    font-size: x-large;
     display: none;
 }
-
 
 .admin-main #admin-sec-3 div{
     width: 100%;
@@ -133,8 +129,8 @@ main{
 }
 
 .admin-main #admin-sec-3 .add-new-user button{
-    background-color: #4CAF50;
-    color: #fff;
+    background-color: rgb(23, 210, 235);
+    color: #050404;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -149,4 +145,67 @@ main{
     /* background-color: orange; */
     align-items: start;
 
+}
+
+
+
+
+
+/* Loader starts animation */
+.loader {
+    --s: 50px;
+    --g :20px;  
+    
+    width: calc(3*(1.353*var(--s) + var(--g)));
+    display: grid;
+    justify-items: end;
+    aspect-ratio: 3;
+    overflow: hidden;
+    --_m: linear-gradient(90deg,#0000,#000 15px calc(100% - 15px),#0000);
+    -webkit-mask: var(--_m);
+            mask: var(--_m);
+  }
+  .loader:before { 
+    content: "";
+    width: 200%;
+    background:
+      linear-gradient(90deg,rgb(23, 210, 235) 50%,#0000 0),
+      conic-gradient(from -90deg at var(--s) calc(0.353*var(--s)),
+        #a3ebee 135deg,#666 0 270deg,#aaa 0); 
+    background-blend-mode: multiply;
+    --_m:
+      linear-gradient(to bottom right,
+         #0000 calc(0.25*var(--s)),#000 0 calc(100% - calc(0.25*var(--s)) - 1.414*var(--g)),#0000 0),
+      conic-gradient(from -90deg at right var(--g) bottom var(--g),#000 90deg,#0000 0);
+    -webkit-mask: var(--_m);
+            mask: var(--_m);
+    background-size:   calc(100%/3) 100%, calc(100%/6) 100%;
+    -webkit-mask-size: calc(100%/6) 100%;
+            mask-size: calc(100%/6) 100%;
+    -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+    animation: l10 1s infinite linear;
+  }
+  @keyframes l10 {
+    to {transform:translate(calc(100%/3))}
+  }
+/* Loader ends  */
+
+
+#loader-container{
+    width: 80%;
+    height: 80%;
+    background-color: #f0f0f0;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+#loader-container h2{
+    height: 75px;
+    font-size: larger;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NPRARL</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/common.css') }}">  <!--href="css/common.css"-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">   <!--href="css/login.css"-->
+    <!-- <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <link rel="stylesheet" type="text/css"  href="../static/css/login.css"> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}"> 
 </head>
 <body>
     <header>
@@ -33,8 +35,8 @@
             <input type="text" id="username" name="username">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password">
-            <input type="submit" value="Sign In">
-            <!-- <p><a href="#">Forgot your password?</a></p> -->
+            <input type="submit" value="Sign In" onclick="login()">
+            <!-- <span class="login-error-message"></span> -->
         </div>
 
     </main>
@@ -42,5 +44,6 @@
 
     </footer> -->
 </body>
-<script src="{{ url_for('static', filename='js/login.js') }}"  ></script>  <!--src="js/login.js"-->
+<!-- <script src="../static/js/login.js" ></script>   -->
+<script src="{{ url_for('static', filename='js/login.js') }}"  ></script> 
 </html>

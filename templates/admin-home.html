@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NPRARL</title>
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/admin-style.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+    <link rel="stylesheet" href="../static/css/admin-style.css">
 </head>
 <body>
     <header>
@@ -23,15 +23,15 @@
         </div>
     </header>
 
-    <main>
+    <main id="{{ return_message }}">
         <div class="side-bar">
-            <div id="admin-button-1" class="active" onclick="ChangeWorkSection(1)">Home</div>
+            <div id="admin-button-1" onclick="ChangeWorkSection(1)">Home</div>
             <div id="admin-button-2" onclick="ChangeWorkSection(2)">Upload Videos</div>
             <div id="admin-button-3" onclick="ChangeWorkSection(3)">Registered Users</div>
             <div id="admin-button-4" onclick="ChangeWorkSection(4)">Check Database</div>
         </div>
         <div class="admin-main">
-            <div id="admin-sec-1" class="admin-sections admin-home active">
+            <div id="admin-sec-1" class="admin-sections admin-home ">
                 <div class="admin-greeating">
                     Hello Admin <br>
                     // blah blah blah <br> <br> <br>                    
@@ -39,19 +39,26 @@
                 </div>
             </div>
             <div id="admin-sec-2" class="admin-sections video-upload">
+                <div id="loader-container"> 
+                    <div>
+                        <div class="loader"></div>
+                        <h2>Uploading...</h2>
+                    </div>   
+                </div>
                 <div class="upload-section">
                     <div>
                         <h2>Upload a video to system </h2><br>
-                        <input type="file" name="file-input" id=""><br>
-                        <input type="submit" value="Upload">
+                        <form action="/vid_upload" method="post" enctype="multipart/form-data" onsubmit="load_animation()">
+                            <input type="file" name="file" accept=".mp4"><br>
+                            <input type="submit" value="Upload">
+                        </form>
                     </div>
                 </div>
-                <div class="result">
-                    <h2><span>Upload complete</span></h2>
+                <div class="result" id="vid-upload-result">
+                    <h2><span>Upload completed</span></h2>
                 </div>
             </div>
             <div id="admin-sec-3" class="admin-sections users">
-                <!-- // Registered Users -->
                 <div>
                     <div class="add-new-user">
                         Add New User ? 
@@ -69,7 +76,7 @@
 
     </footer> -->
 </body>
-<script src="js/admin.js"></script>
+<script src="../static/js/admin.js"></script>
 </html>
 
 

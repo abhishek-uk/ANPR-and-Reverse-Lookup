@@ -1,3 +1,19 @@
+body{
+    min-height: 100vh;
+    height: 100vh;
+}
+
+.navbar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.navbar .logout-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .search-box{
     margin: 20px;
     height: 30vh;
@@ -7,7 +23,6 @@
     justify-content: center;
     /* background-color: violet; */
 }
-
 .search-box h2{
     font-size: 24px;
     margin-bottom: 15px;
@@ -53,7 +68,6 @@
     display: none;
 }
 
-
 #plate-found .hsrp-result{
     margin: 10px;
     padding: 10px;
@@ -61,11 +75,9 @@
     display: flex;
     justify-content: center;
 }
-
 #plate-found .hsrp-result h2 span{
     display: none;
 }
-
 #plate-found .video-result{
     /* display:inline-block; */
     /* justify-content: space-evenly; */
@@ -73,6 +85,5 @@
     height: 100px;
     padding: 20px;
     /* display: flex; */
-
     justify-content: center;
 }
