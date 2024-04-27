@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from main import save_plates_from_video
+from main import save_from_video
 import os 
 import time
 
@@ -24,8 +24,8 @@ def admin_upload_vid():
         if uploaded_file:
             file_path = os.path.join('instance', 'uploads', uploaded_file.filename)
             uploaded_file.save(file_path)
-            # save_plates_from_video(file_path)
-            time.sleep(2)
+            save_from_video(file_path)
+            # time.sleep(2)
         
     return render_template('admin-home.html', return_message='from_vid_upload')
 

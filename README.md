@@ -19,3 +19,12 @@ templates: html files
 static: css and js 
 
 // also check .gitignore file 
+
+
+## pytessureact installation:
+
+goto pip intall organization bottom instaruction to download google somthing 
+set tessureact.exe dir at env variable
+'''
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+'''

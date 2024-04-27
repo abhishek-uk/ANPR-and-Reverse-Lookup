@@ -10,36 +10,25 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
-import easyocr
-
-import csv
+# import csv
 import uuid
-
 import time
 
+import re
+import pytesseract
+
+import mysql.connector
+
+
+
 CUSTOM_MODEL_NAME = 'my_ssd_mobnet'
-PRETRAINED_MODEL_NAME = 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8'
-TF_RECORD_SCRIPT_NAME = 'generate_tfrecord.py'
 LABEL_MAP_NAME = 'label_map.pbtxt'
-
 paths = {
-    'WORKSPACE_PATH': os.path.join('Tensorflow', 'workspace'),
-    'SCRIPTS_PATH': os.path.join('Tensorflow','scripts'),
-    'APIMODEL_PATH': os.path.join('Tensorflow','models'),
     'ANNOTATION_PATH': os.path.join('Tensorflow', 'workspace','annotations'),
-    'IMAGE_PATH': os.path.join('Tensorflow', 'workspace','images'),
-    'MODEL_PATH': os.path.join('Tensorflow', 'workspace','models'),
-    'PRETRAINED_MODEL_PATH': os.path.join('Tensorflow', 'workspace','pre-trained-models'),
     'CHECKPOINT_PATH': os.path.join('Tensorflow', 'workspace','models',CUSTOM_MODEL_NAME),
-    'OUTPUT_PATH': os.path.join('Tensorflow', 'workspace','models',CUSTOM_MODEL_NAME, 'export'),
-    'TFJS_PATH':os.path.join('Tensorflow', 'workspace','models',CUSTOM_MODEL_NAME, 'tfjsexport'),
-    'TFLITE_PATH':os.path.join('Tensorflow', 'workspace','models',CUSTOM_MODEL_NAME, 'tfliteexport'),
-    'PROTOC_PATH':os.path.join('Tensorflow','protoc')
- }
-
+}
 files = {
     'PIPELINE_CONFIG':os.path.join('Tensorflow', 'workspace','models', CUSTOM_MODEL_NAME, 'pipeline.config'),
-    'TF_RECORD_SCRIPT': os.path.join(paths['SCRIPTS_PATH'], TF_RECORD_SCRIPT_NAME),
     'LABELMAP': os.path.join(paths['ANNOTATION_PATH'], LABEL_MAP_NAME)
 }
 
@@ -64,7 +53,7 @@ category_index = label_map_util.create_category_index_from_labelmap(files['LABEL
 
 
 # Plate Detection Function
-def detect_plate(img, detection_threshold=0.5, img_from_path=False):
+def detect_plate(img, detection_threshold=0.3, img_from_path=False):
     if img_from_path: 
         img_array = cv2.imread(img) # only for detect from direct img, if np array this dont need 
     else:
@@ -77,6 +66,7 @@ def detect_plate(img, detection_threshold=0.5, img_from_path=False):
 
     num_detections = int(detections.pop('num_detections'))
     detections = {key: value[0, :num_detections].numpy() for key, value in detections.items()}
+    # detections['num_detections'] = num_detections       # some times dont need, need to focus here
     detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
 
     # return img_np, detections
@@ -98,45 +88,90 @@ def detect_plate(img, detection_threshold=0.5, img_from_path=False):
 
 
 
-# Function to Temp-Save data on csv file
-def save_results_as_csv(plate, text):
-    img_name = '{}.jpg'.format(uuid.uuid1())
-    cv2.imwrite(os.path.join('Detection_Images', img_name), plate)
-    with open('detection_results.csv', mode='a', newline='') as f:
-        csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        csv_writer.writerow([img_name, text])
-
-
-
-# Plate Recognition Function
-reader = easyocr.Reader(['en'], gpu=False)
-def rec_text(plate):
-    text = ''
-    ocr_result = reader.readtext(plate)
-    for part in ocr_result:
-        text += part[1]
+# Adding custom options
+custom_config = r'--oem 3 --psm 6'
+def rec_plate(plate):
+    text = pytesseract.image_to_string(plate, config=custom_config)
+    text = re.sub(r'\W+', '', text)
+    # print(text)
     return text
 
 
 
-print('started ')
+
+mydb = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password='P@ssw0rd',
+    database="mydatabase"
+)
+mycursor = mydb.cursor()
+
+# mycursor.execute('''CREATE TABLE IF NOT EXISTS recognized_vehicles (
+#                                         id INT AUTO_INCREMENT PRIMARY KEY, 
+#                                         plate_number VARCHAR(255),
+#                                         plate_img_name VARCHAR(255),
+#                                         video_file_name VARCHAR(255),
+#                                         frame_number INT,
+#                                         loaction VARCHAR(255),
+#                                         date_time DATETIME
+#                                         )  ''')
+
+# mycursor.execute('show tables')
+# for i in mycursor:
+#     print(i)
 
 
-def save_plates_from_video(vid_path):
+
+sql = 'INSERT INTO recognized_vehicles (plate_number, plate_img_name, video_file_name, frame_number, loaction, date_time) VALUES (%s, %s, %s, %s, %s, %s)'
+def save_db(plate, plate_number, video_name, frame_nr):
+    img_name = '{}.jpg'.format(uuid.uuid1())
+    cv2.imwrite(os.path.join('instance', 'detected_plates', img_name), plate)
+    location, date, time = video_name.split('.')[0].split('_')
+    date_time = '{}-{}-{} {}:{}:{}'.format(date[4:], date[2:4], date[:2], time[:2], time[2:], '00')
+
+    val = (plate_number, img_name, video_name, frame_nr, location, date_time)
+    mycursor.execute(sql, val)
+    mydb.commit()
+
+
+
+def save_from_video(vid_path, new_fps = 20):
     cap = cv2.VideoCapture(vid_path)
+    print(cap.get(cv2.CAP_PROP_FRAME_COUNT), end=', ')
+    print(cap.get(cv2.CAP_PROP_FRAME_HEIGHT), end=', ')
+    print(cap.get(cv2.CAP_PROP_FRAME_WIDTH), end=', ')
+    print(cap.get(cv2.CAP_PROP_FPS))
+
+    fps = int(round(cap.get(cv2.CAP_PROP_FPS) / 10) * 10)
+    print(fps)
+    readed_plates = set()
+    current_frame = 0
+    saves = 0
+
     while cap.isOpened():
         ret, frame = cap.read()
         if ret:
-            plates = detect_plate(frame)  
-            for plate in plates:
-                plate_number = rec_text(plate)
-                #  code to store data in to database 
-                if not os.path.exists(f'Temp/{plate_number}.png'):
-                    cv2.imwrite(f'Temp/{plate_number}.png', plate)
+            if( ( new_fps * current_frame ) % fps == 0):
+                plates = detect_plate(frame, detection_threshold= 0.2)
+                for plate in plates:
+                    plate_number = rec_plate(plate) 
+                    if plate_number not in readed_plates:
+                        save_db(
+                            plate=plate,
+                            plate_number=plate_number,
+                            video_name=os.path.basename(vid_path).split('/')[-1],
+                            frame_nr=current_frame
+                        )
+                        readed_plates.add(plate_number)
+                        saves += 1
+            current_frame += 1
         else:
             break
-    cap.release()
 
+    cap.release()
+    print(f'saves: {saves}')
+    print(f'current_frame: {current_frame}\n')
 
 
 print('done')
