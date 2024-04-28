@@ -209,3 +209,51 @@ main{
     align-items: center;
     justify-content: center;
 }
+
+
+#admin-sec-4{
+    width: 100%;
+}
+.recognized-vehicle-db{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.recognized-vehicle-db .refresh-field{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    padding: 20px;
+    margin-bottom: 50px;
+    align-items: center;
+}
+.recognized-vehicle-db .vd_container div{
+    display: flex;justify-content: center;
+}
+.recognized-vehicle-db .refresh-field button{
+    background-color: rgb(23, 210, 235);
+    color: #050404;
+    padding: 10px 20px;
+    margin-left: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+table{
+    border: 1px solid black;
+}
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+
+.navbar .logout-section button{
+    background-color: rgb(23, 210, 235);
+    color: #050404;
+    padding: 10px 20px;
+    margin-left: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

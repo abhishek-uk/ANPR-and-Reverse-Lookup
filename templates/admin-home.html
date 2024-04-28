@@ -18,7 +18,7 @@
                 </a>
             </div>
             <div class="logout-section">
-                <button onclick="console.log('logout button clicked')">Logout</button>
+                <button onclick="window.location.href = '/';">Logout</button>
             </div>
         </div>
     </header>
@@ -68,7 +68,32 @@
                 <div class="show-users">dfdfd</div>
             </div>
             <div id="admin-sec-4" class="admin-sections database-check">
-                // Databases
+                <div class="recognized-vehicle-db">
+                    <div class="vd_container">
+                        <div class="refresh-field">
+                            <h3>Refresh Recognized Vehicle Database</h3>
+                            <button onclick="window.location.href = '/db_refresh';">Refresh</button>
+                        </div>
+                        <div>   
+                            <script>
+                                var db_values = "{{ db_value }}";
+                                db_values = db_values.replace(/&#34;/g, '"'); 
+                                db_values = db_values.toString()
+                                const jsonString = JSON.stringify(db_values);
+                                const jsArray = JSON.parse(jsonString);
+                            </script>
+                            <table id="rec-vehicle-table">
+                                <tr>
+                                    <th>SI No.</th>
+                                    <th>Plate Number</th>
+                                    <th>Location</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

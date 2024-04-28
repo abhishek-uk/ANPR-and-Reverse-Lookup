@@ -19,6 +19,7 @@ import pytesseract
 
 import mysql.connector
 
+import datetime
 
 
 CUSTOM_MODEL_NAME = 'my_ssd_mobnet'
@@ -107,14 +108,16 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-# mycursor.execute('''CREATE TABLE IF NOT EXISTS recognized_vehicles (
+# mycursor.execute('''CREATE TABLE IF NOT EXISTS recognized_vehicle (
 #                                         id INT AUTO_INCREMENT PRIMARY KEY, 
 #                                         plate_number VARCHAR(255),
 #                                         plate_img_name VARCHAR(255),
 #                                         video_file_name VARCHAR(255),
 #                                         frame_number INT,
+#                                         frame_time INT,
 #                                         loaction VARCHAR(255),
-#                                         date_time DATETIME
+#                                         date VARCHAR(255), 
+#                                         time VARCHAR(255)
 #                                         )  ''')
 
 # mycursor.execute('show tables')
@@ -123,14 +126,20 @@ mycursor = mydb.cursor()
 
 
 
-sql = 'INSERT INTO recognized_vehicles (plate_number, plate_img_name, video_file_name, frame_number, loaction, date_time) VALUES (%s, %s, %s, %s, %s, %s)'
-def save_db(plate, plate_number, video_name, frame_nr):
+sql = 'INSERT INTO recognized_vehicle (plate_number, plate_img_name, video_file_name, frame_number, frame_time, loaction, date, time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)'
+def save_db(plate, plate_number, video_name, frame_nr, frame_time):
     img_name = '{}.jpg'.format(uuid.uuid1())
     cv2.imwrite(os.path.join('instance', 'detected_plates', img_name), plate)
     location, date, time = video_name.split('.')[0].split('_')
-    date_time = '{}-{}-{} {}:{}:{}'.format(date[4:], date[2:4], date[:2], time[:2], time[2:], '00')
+    # date_time = '{}-{}-{} {}:{}:{}'.format(date[4:], date[2:4], date[:2], time[:2], time[2:], '00')
+    date = '{}-{}-{}'.format(date[:2], date[2:4], date[4:])
 
-    val = (plate_number, img_name, video_name, frame_nr, location, date_time)
+    time = '{}:{}:{}'.format(time[:2], time[2:], '00')
+    time_obj = datetime.datetime.strptime(time, '%H:%M:%S')
+    time_obj += datetime.timedelta(seconds=frame_time)
+    time = time_obj.strftime('%H:%M:%S')
+
+    val = (plate_number, img_name, video_name, frame_nr, frame_time, location, date, time)
     mycursor.execute(sql, val)
     mydb.commit()
 
@@ -157,14 +166,16 @@ def save_from_video(vid_path, new_fps = 20):
                 for plate in plates:
                     plate_number = rec_plate(plate) 
                     if plate_number not in readed_plates:
-                        save_db(
-                            plate=plate,
-                            plate_number=plate_number,
-                            video_name=os.path.basename(vid_path).split('/')[-1],
-                            frame_nr=current_frame
-                        )
-                        readed_plates.add(plate_number)
-                        saves += 1
+                        if 6 <= len(plate_number) <= 12:    
+                            save_db(
+                                plate=plate,
+                                plate_number=plate_number,
+                                video_name=os.path.basename(vid_path).split('/')[-1],
+                                frame_nr=current_frame,
+                                frame_time = int(current_frame / cap.get(cv2.CAP_PROP_FPS))
+                            )
+                            readed_plates.add(plate_number)
+                            saves += 1
             current_frame += 1
         else:
             break
