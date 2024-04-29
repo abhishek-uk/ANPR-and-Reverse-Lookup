@@ -18,7 +18,7 @@
                 </a>
             </div>
             <div class="logout-section">
-                <button onclick="alert('logout button clicked')">Logout</button>
+                <button onclick="window.location.href = '/';">Logout</button>
             </div>
         </div>
     </header>
@@ -30,26 +30,18 @@
             <button id="search-button"><i class="fa fa-search">Search</i></button>
         </div>
 
-        <div class="search-result-section">
-            <div id="plate-not-found">
-                <h1>The Plate is not Found</h1>
+        <div class="search-result-section"> <!-- '{{ display_obj_full_result }}'"> -->
+            {{ plate_not_found_section | safe }}
+
+            {{ plate_found_section | safe }}
+            <div class="video-result" id = {{display_variable}} >
+                <video id="myVideo" width="750" controls muted>
+                    <source src='../static/uploads/{{vid_file_name}}'  type="video/mp4">
+                </video>
             </div>
-            <div id="plate-found">
-                <div class="hsrp-result">
-                    <h2>This Number Plate is <span id="hsrp-no-not">NOT</span> HSRP approved</h2>
-                </div>
-                <div class="video-result">
-                    set of videos
-                    <!-- <video width="390" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
-                    <!-- <video width="390" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
-                    <!-- <video width="390" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
-                    <!-- <video width="390" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
-                    <!-- <video width="320" height="240" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
-                    <!-- <video width="320" height="240" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
-                    <!-- <video width="320" height="240" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
-                    <!-- <video width="320" height="240" controls muted><source src="TEST.mp4" type="video/mp4"></video> -->
-                </div>
-            </div>
+            <script>
+                vid_start_time = '{{ start_time }}'
+            </script>
         </div>
     </main>
     

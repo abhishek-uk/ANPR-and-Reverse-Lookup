@@ -14,6 +14,15 @@ body{
     justify-content: center;
 }
 
+.navbar .logout-section button{
+    background-color: rgb(23, 210, 235);
+    color: #050404;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .search-box{
     margin: 20px;
     height: 30vh;
@@ -35,18 +44,19 @@ body{
     width: 300px;
     text-align: center;
 }
-#search-button{
+ #search-button{
+    background-color: rgb(23, 210, 235);
+    color: #050404;
     padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    cursor: pointer;
     margin-top: 10px;
-}
+} 
 
 #search-button:hover{
-    background-color: #45a049;
+    background-color: rgb(96, 216, 231);
 }
 
 
@@ -65,25 +75,56 @@ body{
     /* background-color: red; */
     display: flex;
     justify-content: center;
+    /* display: none; */
+}
+
+
+
+/* #plate-not-found{
+    display: none;
+}
+#plate-found{
+    display: none;
+} */
+
+
+.video-result{
     display: none;
 }
 
-#plate-found .hsrp-result{
+/* #plate-found .hsrp-result{
     margin: 10px;
     padding: 10px;
-    /* background-color: orange; */
+
     display: flex;
     justify-content: center;
 }
 #plate-found .hsrp-result h2 span{
     display: none;
-}
+} */
 #plate-found .video-result{
-    /* display:inline-block; */
-    /* justify-content: space-evenly; */
-    /* background-color: #fff; */
-    height: 100px;
-    padding: 20px;
-    /* display: flex; */
+    padding: 40px;
+    display: flex;
     justify-content: center;
+    /* align-items: center; */
 }
+
+#plate-found .plate-details {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+}
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 40px 20px;
+    font-size: 30px;
+}
+
+/* #display-ontop{
+    display: grid;
+}
+
+#display-none{
+    display: none;
+} */
