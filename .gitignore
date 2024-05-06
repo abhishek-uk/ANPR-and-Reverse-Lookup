@@ -32,3 +32,9 @@ instance/
 Temp/
 
 static/uploads/
+
+static/detected_plates
+
+hsrp.ipynb
+
+HSRP_prediction_160_model.h5

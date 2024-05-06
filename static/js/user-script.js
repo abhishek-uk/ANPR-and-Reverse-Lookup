@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
     this.currentTime = parseInt(vid_start_time); // Start time in seconds (3 minutes 20 seconds)
   });
   video.addEventListener("timeupdate", function() {
-    if (this.currentTime >= parseInt(vid_start_time) + 15) { // End time in seconds (4 minutes 30 seconds)
+    if (this.currentTime >= parseInt(vid_start_time) + 10) { // End time in seconds (4 minutes 30 seconds)
       this.pause();
     }
   });

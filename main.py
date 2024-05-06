@@ -104,7 +104,7 @@ mydb = mysql.connector.connect(
     host='localhost',
     user='root',
     password='P@ssw0rd',
-    database="mydatabase"
+    database="nprarl_db"
 )
 mycursor = mydb.cursor()
 
@@ -126,10 +126,10 @@ mycursor = mydb.cursor()
 
 
 
-sql = 'INSERT INTO recognized_vehicle (plate_number, plate_img_name, video_file_name, frame_number, frame_time, loaction, date, time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)'
+sql = 'INSERT INTO recognized_vehicles (plate_number, plate_img_name, video_file_name, frame_number, frame_time, loaction, date, time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)'
 def save_db(plate, plate_number, video_name, frame_nr, frame_time):
     img_name = '{}.jpg'.format(uuid.uuid1())
-    cv2.imwrite(os.path.join('instance', 'detected_plates', img_name), plate)
+    cv2.imwrite(os.path.join('static', 'detected_plates', img_name), plate)
     location, date, time = video_name.split('.')[0].split('_')
     # date_time = '{}-{}-{} {}:{}:{}'.format(date[4:], date[2:4], date[:2], time[:2], time[2:], '00')
     date = '{}-{}-{}'.format(date[:2], date[2:4], date[4:])
@@ -186,3 +186,40 @@ def save_from_video(vid_path, new_fps = 20):
 
 
 print('done')
+
+
+
+img_size = (299, 299)
+# Function to preprocess the image
+def preprocess_hsrp_image(image_path):
+    try: 
+        img_cv_array = cv2.imread(image_path)
+        height, width, _ = img_cv_array.shape
+        min_dim = min(height, width)
+        squre_img_array = img_cv_array[0:min_dim, 0:min_dim]    # Convert image to square
+
+        gray_img = cv2.cvtColor(squre_img_array, cv2.COLOR_BGR2GRAY)    # Convert to grayscale
+
+        img_resized = cv2.resize(gray_img, img_size)# Resize image to (299, 299)
+        img_array = np.array(img_resized)  # Convert image to numpy array
+        img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+        img_array = img_array.reshape((1, img_size[0], img_size[1], 1))  # Reshape to match model input shape
+        img_array = img_array.astype('float32') / 255.0  # Normalize image
+        return img_array
+    except Exception as e:
+        print("Error in preprocessing: ", e)
+        return None
+    
+
+
+# Load the trained model
+model = tf.keras.models.load_model('HSRP_prediction_400_model.h5')
+
+def predict_hsrp(img_path):
+    pree_processed_img = preprocess_hsrp_image(img_path)
+    prediction = model.predict(pree_processed_img)
+
+    if prediction < 0.5:
+        return 'No'
+    else:
+        return 'Yes'
