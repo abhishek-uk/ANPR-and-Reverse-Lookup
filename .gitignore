@@ -38,3 +38,5 @@ static/detected_plates
 hsrp.ipynb
 
 HSRP_prediction_160_model.h5
+
+HSRP_prediction_400_model.h5
