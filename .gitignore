@@ -1,42 +1,30 @@
 .ipynb_checkpoints/
+__pycache__/
 
-Detection_Images/
-
+Tensorflow/models/
 Tensorflow/models/*
-Tensorflow/
-detection_results.csv
+Tensorflow/protoc/*
+Tensorflow/workspace/annotations/*
+Tensorflow/workspace/images/*
+Tensorflow/workspace/pre-trained-models/*
+Tensorflow/models
 
-templates/TEST.mp4
+# Tensorflow/
 
 RnD.py
 
-webpage/Temp/
-
 RnD.ipynb
-
 
 *.png
 
 codes.md
 
-video_smaple_1.mp4
-
-Test_datas/
-
-__pycache__/
-
-TEST.mp4
-
 instance/
-
-Temp/
 
 static/uploads/
 
 static/detected_plates
 
 hsrp.ipynb
-
-HSRP_prediction_160_model.h5
 
 HSRP_prediction_400_model.h5
